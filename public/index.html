@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat app</title>
+    <link rel="icon" href="/img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+   <div class="centered-form">
+       <div class="centered-form__box">
+           <h1>Join</h1>
+           <form action="/chat.html">
+               <label>Display your username</label>
+               <input type="text" name="username" placeholder="Display your username" required>
+               <div id="select-options"></div>
+               <input id="room-input" type="text" name="room" placeholder="Room" required>
+               <button>Join</button>
+           </form>
+       </div>
+   </div>
+</body>
+<script id="select-option-template" type="text/html">
+    <label>Join one of the active rooms</label>
+    <select name="activeRoom" id="active-room">
+            <option value="" selected>--Please choose an option--</option>
+        {{#rooms}}
+            <option value="{{room}}">{{room}}</option>
+        {{/rooms}}
+    </select>
+    <label>Or create a new room</label>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./js/join.js"></script>
+</html>
