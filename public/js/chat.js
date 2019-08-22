@@ -104,7 +104,7 @@ document.querySelector('#message-form').addEventListener('submit', (e) => {
 
 document.querySelector('#send-location').addEventListener('click', () => {
     if (!navigator.geolocation) {
-        return alert('Your browser does not support geolocation!')
+        return alert('Geolocation is not supported by your browser!')
     }
 
     $locationMessageButton.setAttribute('disabled', 'disabled')
@@ -115,6 +115,19 @@ document.querySelector('#send-location').addEventListener('click', () => {
         }, () => {
             console.log('Location shared!')
             $locationMessageButton.removeAttribute('disabled')
+        })
+    }, (failure) => {
+        console.log(failure)
+        $.getJSON('https://ipinfo.io/geo', (response) => {
+            console.log(response)
+            const loc = response.loc.split(',')
+            socket.emit('sendLocation', {
+                latitude: loc[0],
+                longitude: loc[1]
+            }, () => {
+                console.log('Location shared!')
+                $locationMessageButton.removeAttribute('disabled')
+            })
         })
     })
 })
